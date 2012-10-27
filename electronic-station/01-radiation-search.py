@@ -10,8 +10,8 @@ class GridRunner(object):
         self.path = []
 
     def can_move_to(self, x, y):
-        number = self.number_at(x, y)
-        return all([number, number == self.number, (x, y) not in self.path])
+        return all([self.number_at(x, y) == self.number,
+                    (x, y) not in self.path])
 
     def look_around(self):
         for direction in self.DIRECTIONS:
