@@ -31,7 +31,7 @@ class GridRunner(object):
         if not self.can_move_to(x, y):
             return False
         if (x, y) in self.to_explore:
-            del self.to_explore[self.to_explore.index((x, y))]
+            self.to_explore.remove((x, y))
         self.x = x
         self.y = y
         self.path.append((self.x, self.y))
