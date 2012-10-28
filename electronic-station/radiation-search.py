@@ -1,3 +1,5 @@
+import unittest
+
 class GridRunner(object):
     DIRECTIONS = ((0, -1), (0, 1), (1, 0), (-1, 0),)
 
@@ -61,22 +63,25 @@ def checkio(matr):
             best = score
     return best
 
+class ChekioTest(unittest.TestCase):
+    def test_first(self):
+        self.assertEquals(checkio([
+            [1, 2, 3, 4, 5],
+            [1, 1, 1, 2, 3],
+            [1, 1, 1, 2, 2],
+            [1, 2, 2, 2, 1],
+            [1, 1, 1, 1, 1]
+        ]), [14, 1])
+
+    def test_second(self):
+        self.assertEquals(checkio([
+            [2, 1, 2, 2, 2, 4],
+            [2, 5, 2, 2, 2, 2],
+            [2, 5, 4, 2, 2, 2],
+            [2, 5, 2, 2, 4, 2],
+            [2, 4, 2, 2, 2, 2],
+            [2, 2, 4, 4, 2, 2]
+        ]), [19, 2])
+
 if __name__ == '__main__':
-    assert checkio([
-        [1, 2, 3, 4, 5],
-        [1, 1, 1, 2, 3],
-        [1, 1, 1, 2, 2],
-        [1, 2, 2, 2, 1],
-        [1, 1, 1, 1, 1]
-    ]) == [14, 1], 'First'
-
-    assert checkio([
-        [2, 1, 2, 2, 2, 4],
-        [2, 5, 2, 2, 2, 2],
-        [2, 5, 4, 2, 2, 2],
-        [2, 5, 2, 2, 4, 2],
-        [2, 4, 2, 2, 2, 2],
-        [2, 2, 4, 4, 2, 2]
-    ]) == [19, 2], 'Second'
-
-    print 'All ok'
+    unittest.main(failfast=False)

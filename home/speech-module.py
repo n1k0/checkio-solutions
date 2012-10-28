@@ -10,6 +10,8 @@
 #     checkio(101)=='one hundred one'
 #     checkio(212)=='two hundred twelve'
 
+import unittest
+
 def checkio(number):
     def under_100(n):
         comp = first20[n % 10]
@@ -24,13 +26,23 @@ def checkio(number):
         return first20[number]
     elif number < 100:
         return under_100(number)
-    else:
-        return "%s hundred %s" % (first20[number / 100], checkio(number % 100),)
+    return "%s hundred %s" % (first20[number / 100], checkio(number % 100),)
+
+class ChekioTest(unittest.TestCase):
+    def test_1(self):
+        self.assertEquals(checkio(4), 'four')
+
+    def test_2(self):
+        self.assertEquals(checkio(12), 'twelve')
+
+    def test_3(self):
+        self.assertEquals(checkio(101), 'one hundred one')
+
+    def test_4(self):
+        self.assertEquals(checkio(133), 'one hundred thirty three')
+
+    def test_5(self):
+        self.assertEquals(checkio(212), 'two hundred twelve')
 
 if __name__ == '__main__':
-    assert checkio(4) == 'four', "First"
-    assert checkio(12) == 'twelve', "Third"
-    assert checkio(101) == 'one hundred one', "Fifth"
-    assert checkio(133) == 'one hundred thirty three', "Second"
-    assert checkio(212) == 'two hundred twelve', 'Sixth'
-    print 'All ok'
+    unittest.main(failfast=False)

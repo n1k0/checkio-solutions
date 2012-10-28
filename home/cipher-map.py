@@ -6,6 +6,8 @@
 # square are lowercase Latin letters.
 # Output: Password
 
+import unittest
+
 def checkio(input_data):
     def fetch(placeholders, grid):
         part = ''
@@ -22,28 +24,28 @@ def checkio(input_data):
         password += fetch(placeholders, grid)
     return password
 
-if __name__ == '__main__':
-    p1 = checkio([[
-    'X...',
-    '..X.',
-    'X..X',
-    '....'], [
-    'itdf',
-    'gdce',
-    'aton',
-    'qrdi']])
-    print p1
-    assert p1 == 'icantforgetiddqd', 'First'
+class ChekioTest(unittest.TestCase):
+    def test_1(self):
+        self.assertEquals(checkio([[
+            'X...',
+            '..X.',
+            'X..X',
+            '....'], [
+            'itdf',
+            'gdce',
+            'aton',
+            'qrdi']]), 'icantforgetiddqd')
 
-    p2 = checkio([[
-    '....',
-    'X..X',
-    '.X..',
-    '...X'], [
-    'xhwc',
-    'rsqx',
-    'xqzz',
-    'fyzr']])
-    print p2
-    assert p2 == 'rxqrwsfzxqxzhczy', 'Second'
-    print('All ok')
+    def test_2(self):
+        self.assertEquals(checkio([[
+            '....',
+            'X..X',
+            '.X..',
+            '...X'], [
+            'xhwc',
+            'rsqx',
+            'xqzz',
+            'fyzr']]), 'rxqrwsfzxqxzhczy')
+
+if __name__ == '__main__':
+    unittest.main(failfast=False)

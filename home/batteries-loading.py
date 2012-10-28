@@ -11,6 +11,7 @@
 #     checkio([12, 30, 30, 32, 42, 49]) == 9
 
 import itertools
+import unittest
 
 def best_balance(stoneset):
     balances = []
@@ -27,10 +28,21 @@ def checkio(stones):
         return stones[0]
     return min(set(map(best_balance, list(itertools.permutations(stones)))))
 
+class ChekioTest(unittest.TestCase):
+    def test_1(self):
+        self.assertEquals(checkio([10, 10]), 0)
+
+    def test_2(self):
+        self.assertEquals(checkio([10]), 10)
+
+    def test_3(self):
+        self.assertEquals(checkio([5, 8, 13, 27, 14]), 3)
+
+    def test_4(self):
+        self.assertEquals(checkio([5, 5, 6, 5]), 1)
+
+    def test_5(self):
+        self.assertEquals(checkio([12, 30, 30, 32, 42, 49]), 9)
+
 if __name__ == '__main__':
-    assert checkio([10, 10]) == 0, 'First, with equal weights'
-    assert checkio([10]) == 10, 'Second, with a single stone'
-    assert checkio([5, 8, 13, 27, 14]) == 3, 'Third'
-    assert checkio([5, 5, 6, 5]) == 1, 'Fourth'
-    assert checkio([12, 30, 30, 32, 42, 49]) == 9, 'Fifth'
-    print 'All is ok'
+    unittest.main(failfast=False)

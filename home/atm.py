@@ -13,6 +13,8 @@
 #
 # Output: Account balance after all operations.
 
+import unittest
+
 from decimal import Decimal
 from operator import add
 
@@ -25,19 +27,25 @@ def checkio(data):
     total = reduce(add, withdrawal)
     return balance - total if total <= balance else balance
 
+class ChekioTest(unittest.TestCase):
+    def test_1(self):
+        self.assertEquals(Decimal(checkio([Decimal('120'),
+            [Decimal('10'), Decimal('20'), Decimal('30')]])), Decimal('57.9'))
+
+    def test_2(self):
+        "With one Insufficient Funds, and then withdraw 10 $"
+        self.assertEquals(Decimal(checkio([Decimal('120'),
+            [Decimal('200'), Decimal('10')]])), Decimal('109.4'))
+
+    def test_3(self):
+        "With one incorrect amount"
+        self.assertEquals(Decimal(checkio([Decimal('120'),
+            [Decimal('3'), Decimal('10')]])), Decimal('109.4'))
+
+    def test_4(self):
+        "With another incorrect amount"
+        self.assertEquals(checkio([Decimal('120'),
+            [Decimal('200'), Decimal('119')]]), Decimal('120'))
+
 if __name__ == '__main__':
-    v = Decimal(checkio([Decimal('120'), [Decimal('10'), Decimal('20'), Decimal('30')]]))
-    print v
-    assert v == Decimal('57.9'), 'First'
-
-    # With one Insufficient Funds, and then withdraw 10 $
-    assert Decimal(checkio([Decimal('120'), [Decimal('200'), Decimal('10')]])) ==\
-                            Decimal('109.4'), 'Second'
-
-    #with one incorrect amount
-    assert Decimal(checkio([Decimal('120'), [Decimal('3'), Decimal('10')]])) ==\
-                            Decimal('109.4'), 'Third'
-
-    assert checkio([Decimal('120'), [Decimal('200'), Decimal('119')]]) == Decimal('120'), 'Fourth'
-
-    print('All Ok')
+    unittest.main(failfast=False)

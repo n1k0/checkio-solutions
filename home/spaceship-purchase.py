@@ -7,15 +7,18 @@
 #
 # Output data: the amount of money that Sofia will pay for the spaceship.
 
+import unittest
+
 def checkio(offers):
-    '''
-       the amount of money that Petr will pay for the ride
-    '''
     initial_petr, raise_petr, initial_driver, reduction_driver = offers
     return (initial_driver - reduction_driver) / 2
 
+class ChekioTest(unittest.TestCase):
+    def test_1(self):
+        self.assertEquals(checkio([150, 50, 1000, 100]), 450)
+
+    def test_2(self):
+        self.assertEquals(checkio([150, 50, 900, 100]), 400)
+
 if __name__ == '__main__':
-    print checkio([150, 50, 1000, 100])
-    assert checkio([150, 50, 1000, 100]) == 450, 'First'
-    assert checkio([150, 50, 900, 100]) == 400, 'Second'
-    print 'All is ok'
+    unittest.main(failfast=False)
