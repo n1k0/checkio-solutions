@@ -9,28 +9,21 @@ def submatrix(matr, x, y, size):
 
 def diagonals(matr, N):
     diags = []
-    for size in xrange(1, len(matr) + 1):
-        for x in xrange(size):
-            if x > len(matr) - size:
-                continue
-            for y in xrange(size):
-                if y > len(matr) - size:
-                    continue
+    for size in xrange(2, len(matr) + 1):
+        offsets = xrange(len(matr) - size + 1)
+        for x in offsets:
+            for y in offsets:
                 submatr = submatrix(matr, x, y, size)
-                diags.extend([
-                    [row[i] for i, row in enumerate(submatr)],
-                    [row[-(i + 1)] for i, row in enumerate(submatr)]
-                ])
+                diags.extend([[row[i] for i, row in enumerate(submatr)],
+                              [row[-(i + 1)] for i, row in enumerate(submatr)]])
     return diags
 
 def checkio(matr):
     rotate = lambda lst: zip(*lst[::-1])
     row_ok = lambda r: any([len(list(g)) >= N for _, g in groupby(r)])
-    return any([
-        any(map(row_ok, matr)),
-        any(map(row_ok, rotate(matr))),
-        any(map(row_ok, diagonals(matr, N))),
-    ])
+    return any([any(map(row_ok, matr)),
+                any(map(row_ok, rotate(matr))),
+                any(map(row_ok, diagonals(matr, N))), ])
 
 
 class ChekioTest(unittest.TestCase):
@@ -90,32 +83,28 @@ class ChekioTest(unittest.TestCase):
         ]), False)
 
     def test_diagonals(self):
-        self.assertEquals(diagonals([
-            [1, 2, 3, 4],
-            [2, 3, 4, 5],
-            [3, 4, 5, 6],
-            [4, 5, 6, 7],
-        ], 4), [
-            [1],
-            [1],
-            [1, 3],
-            [2, 2],
-            [2, 4],
-            [3, 3],
-            [2, 4],
-            [3, 3],
-            [3, 5],
-            [4, 4],
-            [1, 3, 5],
-            [3, 3, 3],
-            [2, 4, 6],
-            [4, 4, 4],
-            [2, 4, 6],
-            [4, 4, 4],
-            [3, 5, 7],
-            [5, 5, 5],
-            [1, 3, 5, 7],
-            [4, 4, 4, 4]])
+        diags = diagonals([[1, 2, 3, 4],
+                           [2, 3, 4, 5],
+                           [3, 4, 5, 6],
+                           [4, 5, 6, 7]], 4)
+        self.assertIn([1, 3], diags)
+        self.assertIn([2, 2], diags)
+        self.assertIn([2, 4], diags)
+        self.assertIn([3, 3], diags)
+        self.assertIn([2, 4], diags)
+        self.assertIn([3, 3], diags)
+        self.assertIn([3, 5], diags)
+        self.assertIn([4, 4], diags)
+        self.assertIn([1, 3, 5], diags)
+        self.assertIn([3, 3, 3], diags)
+        self.assertIn([2, 4, 6], diags)
+        self.assertIn([4, 4, 4], diags)
+        self.assertIn([2, 4, 6], diags)
+        self.assertIn([4, 4, 4], diags)
+        self.assertIn([3, 5, 7], diags)
+        self.assertIn([5, 5, 5], diags)
+        self.assertIn([1, 3, 5, 7], diags)
+        self.assertIn([4, 4, 4, 4], diags)
 
     def test_submatrix(self):
         matrix = [
